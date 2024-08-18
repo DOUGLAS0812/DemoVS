@@ -1,4 +1,6 @@
 // Configuração Builder 
+using static PorBaixoDosPanos.MeuMiddleware;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuraçãode Pipeline
@@ -9,6 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.UseMiddleware<LogTemplateMidlleware>();
+
+app.MapGet("/", () =>
+{
+    Thread.Sleep(1500);
+    return "Teste 2";
+});
 
 app.Run();
